@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
-require './lib/meetup_cli'
+require "bundler/setup"
+require "meetup_cli"
+
+#require './lib/meetup_cli'
 
 MeetupCli::CLI.new.call

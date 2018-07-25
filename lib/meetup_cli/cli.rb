@@ -7,9 +7,8 @@ class MeetupCli::CLI
 
   def list_activities
     puts "Welcome to Meetup!!"
-    #scrape the site and list activities
-    activities_array = ["arts", "yoga", "bollywood dance"]
-    activities_array.each_with_index {|val, index| puts "#{index+1}. #{val}"}
+    @categories = MeetupCli::MeetupManager.categories
+    @categories.each_with_index {|val, index| puts "#{index+1}. #{val.name}"}
   end
 
   def menu
@@ -17,16 +16,16 @@ class MeetupCli::CLI
     while input != "exit"
           puts "Enter the activity you are interested in or exit:"
           input = gets.strip.downcase
-      case input
-        when "1"
-          puts "Arts - redondo beach july 30"
-        when "2"
-          puts "Yoga - manhattan beach july 28"
-        when "3"
-          puts "bollywood dance - torrance july 27"
-        when "list"
-          list_activities
-        else
+          binding.pry
+          if input.to_i > 0
+            # get the list of activities for that Category
+            #scraper should get the url and scrape the details
+            puts "#{input.to_i-1}"
+            @activities = @categories[input.to_i].activities
+            @activities.each_with_index {|val, index| puts "#{index+1}. #{val.name} #{val.tag_line}"}
+          elsif  input == "list"
+            list_activities
+          else
           puts "Not sure what you want, type list or exit"
         end
       end
