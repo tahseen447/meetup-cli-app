@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require './lib/meetup_cli'
+
+MeetupCli::CLI.new.call
