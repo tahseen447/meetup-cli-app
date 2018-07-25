@@ -33,3 +33,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/'tahseen447'/meetup_cli.
+
+# meetup-cli-app
+An app that will help users find a meetup in the neighborhood based on their interests.
