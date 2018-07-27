@@ -44,15 +44,16 @@ class MeetupCli::Scraper
 
     meetup = MeetupCli::Meetup.new
     meetup_doc = Nokogiri::HTML(open(new_url = [url, "events"].join))
+  #  written = File.write('./meeup.html', meetup_doc)
     #check if it has upcoming meetups
-    span_elements = doc.css("span").select {|i| i.text == "No upcoming Meetups"}
+    span_elements = meetup_doc.css("span").select {|i| i.text == "No upcoming Meetups"}
     if span_elements.size == 0
       binding.pry
       meetup.name = "Echo Mountain 534"
       meetup.time_object = "Wednesday, July 25, 2018"
       meetup.venue = "Cobb Estate, Lake Avenue at Loma Alta"
       meetup.host = "Linus D."
-      meetup.about = "Please be advised - as a co-organizer of Happy Hour Backpacking and organizer of this hike, I am not soliciting funds."
+      meetup.about = "something"
       else
         meetup.upcoming = false
       end
@@ -60,3 +61,4 @@ class MeetupCli::Scraper
       activity.meetup = meetup
     end
   end
+#flex.flex--column.atMedium_flex--row.eventCard--long
