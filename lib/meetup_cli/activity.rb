@@ -1,8 +1,9 @@
 class MeetupCli::Activity
   attr_accessor :name, :tag_line, :location, :organiser, :total_members, :type_of_group, :about, :meetup, :url
 
-  def initialize(name, tag_line)
+  def initialize(name, url, tag_line)
     @name = name
+    @url = url
     @tag_line = tag_line
   end
 
