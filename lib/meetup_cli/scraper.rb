@@ -22,13 +22,12 @@ class MeetupCli::Scraper
     doc = Nokogiri::HTML(open(url))
     activity_elements = doc.css("a.groupCard--photo.loading.nametag-photo")
     activity_elements.each do |element|
-      name =  element.css("h3.padding-none.inline-block.loading").text
+      name =  element.css("h3.padding-none.inline-block.loading").text.strip
       url = element['href']
-      tag_line = element.css("p.small.ellipsize").text
-      activity = Activity.new(name, url, tag_line)
+      tag_line = element.css("p.small.ellipsize").text.strip
+      activity = MeetupCli::Activity.new(name, url, tag_line)
       activity_list << activity
     end
-    binding.pry
     activity_list
   end
 end
