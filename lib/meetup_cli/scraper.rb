@@ -30,4 +30,33 @@ class MeetupCli::Scraper
     end
     activity_list
   end
-end
+
+  def self.list_meetup(activity)
+    url = activity.url
+    doc = Nokogiri::HTML(open(url))
+    activity.about = doc.css("div.group-description.runningText").css("p").text
+    activity.organiser = doc.css("span.text--bold.text--small")[0].text
+    others = doc.css("p.orgInfo-otherLeadership.display--inline.text--small")[0].text
+    [activity.organiser, others].join(' ')
+    activity.location = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[0].text
+    activity.total_members = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[1].text
+    activity.type_of_group = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[2].text
+
+    meetup = MeetupCli::Meetup.new
+    meetup_doc = Nokogiri::HTML(open(new_url = [url, "events"].join))
+    #check if it has upcoming meetups
+    span_elements = doc.css("span").select {|i| i.text == "No upcoming Meetups"}
+    if span_elements.size == 0
+      binding.pry
+      meetup.name = "Echo Mountain 534"
+      meetup.time_object = "Wednesday, July 25, 2018"
+      meetup.venue = "Cobb Estate, Lake Avenue at Loma Alta"
+      meetup.host = "Linus D."
+      meetup.about = "Please be advised - as a co-organizer of Happy Hour Backpacking and organizer of this hike, I am not soliciting funds."
+      else
+        meetup.upcoming = false
+      end
+      binding.pry
+      activity.meetup = meetup
+    end
+  end
