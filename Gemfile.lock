@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     meetup_cli (0.1.0)
+      nokogiri (~> 1.6)
 
 GEM
   remote: https://rubygems.org/
@@ -48,7 +49,6 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   meetup_cli!
-  nokogiri (~> 1.6)
   poltergeist
   pry (~> 0.9.12.2)
   rake (~> 10.0)
