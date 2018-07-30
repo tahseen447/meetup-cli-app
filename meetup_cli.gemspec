@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["'tahseen447 Siddiqui'"]
   spec.email         = ["'tahseenfatima1986@gmail.com'"]
 
-  spec.summary       = %q{first draft}
-  spec.description   = %q{first draft}
+  spec.summary       = %q{Meet up Cli app helps users find latest upcoming meetups in the Neighborhood based on their interests.}
+  spec.description   = %q{Enter the category and select activities based on interests, the app gives out upcoming meetups around the neighborhood }
   spec.homepage      = "https://www.github.com/tahseen447"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

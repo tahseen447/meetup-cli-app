@@ -3,11 +3,12 @@ class MeetupCli::Meetup
 
 
   def display
+    puts "Upcoming Meetup in the Neighborhood"
     puts "#{@name}"
-    puts "#{@about}"
     puts "#{@host}"
     puts "#{@time_object}"
     puts "#{@venue}"
     puts "#{@attendees}"
+    puts "#{@about}"
   end
 end

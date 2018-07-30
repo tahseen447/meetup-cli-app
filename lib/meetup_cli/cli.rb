@@ -21,7 +21,7 @@ class MeetupCli::CLI
         # get the list of activities for that Category
         #scraper should get the url and scrape the details
         @activities = @categories[input.to_i-1].activities
-        @activities.each_with_index {|val, index| puts "#{index+1}. #{val.name} | #{val.tag_line}"}
+        @activities.each_with_index {|val, index| puts "#{index+1}. #{val.name} | #{val.tag_line} | #{val.url}"}
         elsif  input == "list"
           list_categories
         else

@@ -59,6 +59,7 @@ class MeetupCli::Scraper
     #  binding.pry
       meetup.name = session.first(".eventCardHead--title").text
       meetup.time_object = session.first(".eventTimeDisplay-startDate span").text
+      binding.pry
       meetup.venue = session.first(".venueDisplay").text
       meetup.host = session.first(".text--secondary.text--tiny").text
       meetup.about =session.first(".eventCard--MainContent div").text
