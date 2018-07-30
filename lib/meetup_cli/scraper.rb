@@ -1,5 +1,12 @@
 require 'nokogiri'
 require 'open-uri'
+
+require 'capybara/poltergeist'
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+end
+
 class MeetupCli::Scraper
 
   def self.categories
@@ -43,22 +50,24 @@ class MeetupCli::Scraper
     activity.type_of_group = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[2].text
 
     meetup = MeetupCli::Meetup.new
-    meetup_doc = Nokogiri::HTML(open(new_url = [url, "events"].join))
-  #  written = File.write('./meeup.html', meetup_doc)
+    #use poltergiest to extract java script data from website
+    new_url = [url, "events"].join
+    session = Capybara::Session.new(:poltergeist)
+    session.visit(new_url)
     #check if it has upcoming meetups
-    span_elements = meetup_doc.css("span").select {|i| i.text == "No upcoming Meetups"}
-    if span_elements.size == 0
-      binding.pry
-      meetup.name = "Echo Mountain 534"
-      meetup.time_object = "Wednesday, July 25, 2018"
-      meetup.venue = "Cobb Estate, Lake Avenue at Loma Alta"
-      meetup.host = "Linus D."
-      meetup.about = "something"
-      else
-        meetup.upcoming = false
-      end
-      binding.pry
+    #if session.first(".emptyEventCard")== nil .text != "No upcoming Meetups"
+    #  binding.pry
+      meetup.name = session.first(".eventCardHead--title").text
+      meetup.time_object = session.first(".eventTimeDisplay-startDate span").text
+      meetup.venue = session.first(".venueDisplay").text
+      meetup.host = session.first(".text--secondary.text--tiny").text
+      meetup.about =session.first(".eventCard--MainContent div").text
+      meetup.attendees =session.first(".avatarRow--attendingCount").text
+      meetup.upcoming = true
+    #else
+    #      meetup.upcoming = false
+     #end
+    #  binding.pry
       activity.meetup = meetup
     end
   end
-#flex.flex--column.atMedium_flex--row.eventCard--long
