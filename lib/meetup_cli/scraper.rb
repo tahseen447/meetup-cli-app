@@ -55,23 +55,34 @@ class MeetupCli::Scraper
     session = Capybara::Session.new(:poltergeist)
     session.visit(new_url)
     #check if it has upcoming meetups
-    #if session.first(".emptyEventCard").text != "No upcoming Meetups"
-     begin
+    upcoming = true
+    begin
+      session.first(".emptyEventCard").text
+    rescue
+      Capybara::ExpectationNotMet
+      upcoming = false
+      binding.pry
+    end
+    if upcoming == false
+      begin
       meetup.name = session.first(".eventCardHead--title")['innerHTML']
       meetup.time_object = session.first(".eventTimeDisplay-startDate span")['innerHTML']
-      #binding.pry
+      binding.pry
       meetup.venue = session.first(".venueDisplay").text
       meetup.host = session.first(".text--secondary.text--tiny").text
       meetup.about =session.first(".eventCard--MainContent div").text
       meetup.attendees =session.first(".avatarRow--attendingCount").text
       meetup.upcoming = true
-  rescue
-    Capybara::ExpectationNotMet
-  end
-    #else
-    #      meetup.upcoming = false
-     #end
-    #  binding.pry
+    rescue
+      Capybara::ExpectationNotMet
+      binding.pry
+      upcoming = false
+    end
+    else
+      binding.pry
+       meetup.upcoming = upcoming
+    end
+    binding.pry
       activity.meetup = meetup
     end
   end
