@@ -43,8 +43,8 @@ class MeetupCli::Scraper
     doc = Nokogiri::HTML(open(url))
     activity.about = doc.css("div.group-description.runningText").css("p").text
     activity.organiser = doc.css("span.text--bold.text--small")[0].text
-    others = doc.css("p.orgInfo-otherLeadership.display--inline.text--small")[0].text
-    [activity.organiser, others].join(' ')
+    #others = doc.css("p.orgInfo-otherLeadership.display--inline.text--small")[0].text
+    #[activity.organiser, others].join(' ')
     activity.location = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[0].text
     activity.total_members = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[1].text
     activity.type_of_group = doc.css("ul.inlineblockList.inlineblockList--separated").css("span")[2].text
@@ -55,16 +55,19 @@ class MeetupCli::Scraper
     session = Capybara::Session.new(:poltergeist)
     session.visit(new_url)
     #check if it has upcoming meetups
-    #if session.first(".emptyEventCard")== nil .text != "No upcoming Meetups"
-    #  binding.pry
-      meetup.name = session.first(".eventCardHead--title").text
-      meetup.time_object = session.first(".eventTimeDisplay-startDate span").text
-      binding.pry
+    #if session.first(".emptyEventCard").text != "No upcoming Meetups"
+     begin
+      meetup.name = session.first(".eventCardHead--title")['innerHTML']
+      meetup.time_object = session.first(".eventTimeDisplay-startDate span")['innerHTML']
+      #binding.pry
       meetup.venue = session.first(".venueDisplay").text
       meetup.host = session.first(".text--secondary.text--tiny").text
       meetup.about =session.first(".eventCard--MainContent div").text
       meetup.attendees =session.first(".avatarRow--attendingCount").text
       meetup.upcoming = true
+  rescue
+    Capybara::ExpectationNotMet
+  end
     #else
     #      meetup.upcoming = false
      #end
