@@ -15,12 +15,12 @@ class MeetupCli::Activity
 
   def display_meetups
     list_meetup
-    puts "#{@name}"
-    puts "#{@location}"
-    puts "#{@type_of_group}"
-    puts "#{@organiser}"
-    puts "#{@total_members}"
-    puts "#{@about}"
+    puts "Name: #{@name}"
+    puts "Location: #{@location}"
+    puts "Type of Group: #{@type_of_group}"
+    puts "Organised by:#{@organiser}"
+    puts "Total Member#{@total_members}"
+    puts "About: #{@about}"
     if @meetup.upcoming
       @meetup.display
     else
