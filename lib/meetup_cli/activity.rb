@@ -24,7 +24,9 @@ class MeetupCli::Activity
     if @meetup.upcoming
       @meetup.display
     else
-      "Sorry no upcoming meetups!!"
+      puts "----------------------------------"
+      puts "Sorry no upcoming meetups!!"
+      puts "----------------------------------"
     end
   end
 end
