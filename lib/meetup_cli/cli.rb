@@ -1,5 +1,6 @@
 class MeetupCli::CLI
-    def call
+
+  def call
     list_categories
     menu
     list_activities
@@ -9,15 +10,17 @@ class MeetupCli::CLI
   def list_categories
     puts "Welcome to Meetup!!"
     puts "Enter the category you are interested in or exit:"
-    @categories = MeetupCli::Scraper.categories
+    MeetupCli::Scraper.categories
+    @categories = MeetupCli::Category.all
     @categories.each_with_index {|val, index| puts "#{index+1}. #{val.name} - #{val.url}"}
   end
 
+
   def menu
     input = nil
-      #puts "Enter the category you are interested in or exit:"
+      #puts "Enter the category you are interestedirb in or exit:"
       input = gets.strip.downcase
-      if input.to_i > 0 && input.to_i <= @categories.size
+      if input.to_i > 0 && input.to_i < @categories.length
         # get the list of activities for that Category
         #scraper should get the url and scrape the details
         @activities = @categories[input.to_i-1].activities
@@ -33,7 +36,7 @@ class MeetupCli::CLI
       #from the activities array thats now displayed
       puts "Enter the activities you are interested in or exit:"
       input = gets.strip.downcase
-      if input.to_i > 0 && input.to_i <= @activities.size
+      if input.to_i > 0 && input.to_i < @activities.size
         # get details of that activities-meetup requested
         @activities[input.to_i-1].display_meetups
         elsif  input == "list"

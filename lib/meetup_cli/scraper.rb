@@ -18,9 +18,9 @@ class MeetupCli::Scraper
       url = element.css("a")[0]['href']
       name = element.css("h4").text
       category = MeetupCli::Category.new(name, url)
-      category_list << category
+      #category_list << category
     end
-    category_list
+
   end
 
   def self.activities(category)

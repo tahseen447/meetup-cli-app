@@ -1,9 +1,12 @@
 class MeetupCli::Category
+
+  @@all=[]
   attr_accessor :name, :url
 
   def initialize(name, url)
     @name = name
     @url = url
+    @@all << self
   end
 
 
@@ -13,5 +16,9 @@ class MeetupCli::Category
     #create Activiy objects and fill in the array
     activities_array =MeetupCli::Scraper.activities(self)
     activities_array
+  end
+
+  def self.all
+    @@all
   end
 end
