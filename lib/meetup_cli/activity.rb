@@ -1,10 +1,12 @@
 class MeetupCli::Activity
   attr_accessor :name, :tag_line, :location, :organiser, :total_members, :type_of_group, :about, :meetup, :url
+  @@all =[]
 
   def initialize(name, url, tag_line)
     @name = name
     @url = url
     @tag_line = tag_line
+    @@all << self
   end
 
   def list_meetup
@@ -28,5 +30,9 @@ class MeetupCli::Activity
       puts "Sorry no upcoming meetups!!"
       puts "----------------------------------"
     end
+  end
+
+  def self.all
+    @@all
   end
 end
